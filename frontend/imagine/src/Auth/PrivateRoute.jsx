@@ -1,19 +1,19 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // Import the useAuth hook
+import React from "react";
+import { Route, Navigate } from "react-router-dom";
+import { useAuth } from "./AuthContext"; 
 
 // PrivateRoute component
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { authToken } = useAuth(); // Using the context to check if authenticated
+  const { authToken } = useAuth();
 
   return (
     <Route
       {...rest}
-      render={(props) =>
+      element={
         authToken ? (
-          <Component {...props} />
+          <Component />
         ) : (
-          <Redirect to="/" /> // Redirect to sign-in page if not authenticated
+          <Navigate to="/" replace /> 
         )
       }
     />

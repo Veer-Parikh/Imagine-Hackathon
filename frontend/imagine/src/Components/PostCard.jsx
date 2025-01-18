@@ -33,8 +33,8 @@ const PostCard = ({ name, message, views, images }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", margin: "auto", marginLeft:'250px'}}>
-      <CardContent style={{ paddingLeft: "25px", paddingTop: "25px" }}>
+    <Box sx={{ width: "100%", margin: "auto", paddingLeft:'170px', borderBottom:'1px solid #ccc'}}>
+      <CardContent style={{ paddingLeft: "25px", paddingTop: "25px", width:'400px' }}>
         {/* Header */}
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">

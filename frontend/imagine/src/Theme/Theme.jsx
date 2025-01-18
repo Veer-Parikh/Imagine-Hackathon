@@ -8,6 +8,9 @@ const Theme1 = createTheme({
         black:{
             main:'#170e23' 
         },
+        dark:{
+            main:'#0d0c0c'
+        }
     },
 
     typography: {

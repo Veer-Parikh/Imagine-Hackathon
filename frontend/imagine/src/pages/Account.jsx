@@ -16,19 +16,12 @@ import photo from "../images/photo.png";
 import texts from "../images/text-size.png";
 import AddPostcard from "../Components/AddPostcard";
 import { useTheme } from "../Theme/ThemeProvider"; 
+import Theme1 from "../Theme/Theme";
 
 
 const ProfilePage = () => {
 
   const { isDarkTheme } = useTheme(); 
-
-  const styles = {
-    container: {
-      color: isDarkTheme ? "#fff" : "#000",
-      borderRadius: "8px",
-      padding: "16px",
-    },
-  }
 
   const data = {
     name: "Samantha Jones",
@@ -45,14 +38,17 @@ const ProfilePage = () => {
 
   return (
     <>
+    <Box style={{height:'100vh'}}>
     <Box
     sx={{
     display: "flex",
     justifyContent: "center",
     width:"100%",
+    backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main,
+    color: isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main
   }}
 >
-      <Box sx={styles.container}>
+      <Box>
         <Avatar
           src={data.profilePicture}
           alt={data.name}
@@ -64,16 +60,16 @@ const ProfilePage = () => {
             textAlign:'center'
           }}
         />
-        <Typography variant="h6" fontWeight="bold" textAlign='center'>
+        <Typography variant="h6" fontWeight="bold" textAlign='center' color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>
           {data.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary" textAlign='center'>
+        <Typography variant="body2" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main} textAlign='center'>
           {data.location}
         </Typography>
-        <Typography variant="body1" textAlign='center' sx={{ marginY: 1 }}>
+        <Typography variant="body1" textAlign='center' color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main} sx={{ marginY: 1 }}>
           {data.role}
         </Typography>
-        <Typography variant="body2" color="text.secondary" textAlign='center' sx={{ marginBottom: 2 }}>
+        <Typography variant="body2" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main} textAlign='center' sx={{ marginBottom: 2 }}>
           {data.education}
         </Typography>
 
@@ -85,21 +81,21 @@ const ProfilePage = () => {
             paddingX: 3,
           }}
         >
-          <Box textAlign="center" marginLeft='30px'>
-            <Typography variant="h6">{data.stats.friends}</Typography>
-            <Typography variant="body2" color="text.secondary">
+          <Box textAlign="center" marginLeft='30px' marginRight='200px'>
+            <Typography variant="h6" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>{data.stats.friends}</Typography>
+            <Typography variant="body2" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>
               Posts
             </Typography>
           </Box>
-          <Box textAlign="center">
-            <Typography variant="h6">{data.stats.photos}</Typography>
-            <Typography variant="body2" color="text.secondary">
+          <Box textAlign="center" marginRight='180px'>
+            <Typography variant="h6" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>{data.stats.photos}</Typography>
+            <Typography variant="body2" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>
               Followers
             </Typography>
           </Box>
-          <Box textAlign="center">
-            <Typography variant="h6">{data.stats.comments}</Typography>
-            <Typography variant="body2" color="text.secondary">
+          <Box textAlign="center" marginLeft='30px'>
+            <Typography variant="h6" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>{data.stats.comments}</Typography>
+            <Typography variant="body2" color={isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main}>
               Following
             </Typography>
           </Box>
@@ -113,12 +109,13 @@ const ProfilePage = () => {
     <Box
   style={{
     borderBottom: "2px solid #ccc",
-    marginLeft: "62px",
-    marginRight: "62px",
+    paddingLeft: "62px",
+    paddingRight: "62px",
     paddingBottom: "2px",
+    backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main
   }}
 >
-  <Grid container>
+  <Grid container style={{  backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main}}>
     <Grid
       item
       xs={6}
@@ -152,7 +149,7 @@ const ProfilePage = () => {
 </Box>
 
 
-      <Grid container spacing={2} style={{justifyContent:'center', marginTop:'10px'}}>
+      <Grid container spacing={2} style={{justifyContent:'center', paddingTop:'10px',   backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main}}>
         <Grid item xs={4}>
           <img src={img2} style={{width:'230px', height:'230px', }} />
         </Grid>
@@ -165,8 +162,10 @@ const ProfilePage = () => {
       </Grid>
     </Box>
 
-    <Box>
+    <Box style={{  backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main}}>
       <AddPostcard/>
+    </Box>
+
     </Box>
     </>
   );

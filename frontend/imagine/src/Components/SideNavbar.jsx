@@ -3,6 +3,7 @@ import { Button, Typography, Switch, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../Theme/ThemeProvider";
 import Theme1 from "../Theme/Theme";
+import logo from "../images/logo_kinnet.png";
 
 function SideNavbar() {
   const [selectedButton, setSelectedButton] = useState("posts");
@@ -15,17 +16,23 @@ function SideNavbar() {
   };
 
   return (
+    <div style={{backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main,}}>
+      
     <div
       style={{
         textAlign: "left",
         height: "100vh",
-        marginLeft: "20px",
+        paddingLeft: "15px",
+        marginLeft:'-10px',
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        backgroundColor: isDarkTheme?Theme1.palette.dark.main:Theme1.palette.white.main,
+        color: isDarkTheme?Theme1.palette.white.main:Theme1.palette.black.main
       }}
     >
-      <ul style={{ listStyle: "none", marginTop: "40px", padding: 0 }}>
+      <img src={logo} style={{width:'110px', marginLeft:'75px', paddingTop:'20px', paddingBottom:'30px'}} />
+      <ul style={{ listStyle: "none", marginTop: "-350px", padding: 0 }}>
         {[
           { name: "posts", path: "/", label: "Posts" },
           { name: "friends", path: "/friends", label: "Friends" },
@@ -38,13 +45,19 @@ function SideNavbar() {
               onClick={() => handleButtonClick(item.name, item.path)}
               sx={{
                 backgroundColor:
-                  selectedButton === item.name
-                    ? Theme1.palette.black.main
-                    : Theme1.palette.white.main,
+                isDarkTheme?( selectedButton === item.name
+                  ? Theme1.palette.white.main
+                  : Theme1.palette.dark.main):
+                  (selectedButton === item.name
+                    ? Theme1.palette.dark.main
+                    : Theme1.palette.white.main),
                 color:
-                  selectedButton === item.name
+                isDarkTheme?( selectedButton === item.name
+                  ? Theme1.palette.dark.main
+                  : Theme1.palette.white.main):
+                  (selectedButton === item.name
                     ? Theme1.palette.white.main
-                    : Theme1.palette.black.main,
+                    : Theme1.palette.dark.main),
                 width: "95%",
                 padding: "8px",
                 marginLeft: "1px",
@@ -99,6 +112,7 @@ function SideNavbar() {
           labelPlacement="end"
         />
       </div>
+    </div>
     </div>
   );
 }
