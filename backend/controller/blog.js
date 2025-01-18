@@ -234,8 +234,55 @@ const fetchBlogComments = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching comments' });
     }
   };
+
+  async function getBlogBySearch(req, res) {
+    try {
+      const searchWord = req.params.searchWord; // Get the search word from request parameters
+  
+      // Find blogs based on the searchWord
+      const blogs = await Blog.find({
+        $or: [
+          { tags: { $in: [searchWord] } }, // Match blogs where the tags array contains the search word
+          { text: { $regex: searchWord, $options: "i" } }, // Match blogs where the text contains the search word (case-insensitive)
+          { title: { $regex: searchWord, $options: "i" } }, // Match blogs where the title contains the search word (case-insensitive)
+          {
+            userId: await User.findOne({
+              username: { $regex: searchWord, $options: "i" }, // Match blogs by username (case-insensitive)
+            }).select("_id"),
+          },
+        ],
+      })
+        .populate("userId", "username") // Populate the user field with the username
+        .populate({
+          path: "comments",
+          populate: { path: "userId", select: "username" }, // Populate comments with user details
+        })
+        .select(
+          "blogId createdAt text title tags likedBy Images comments isMilestone forCF"
+        ) // Select specific fields
+        .sort({ createdAt: -1 }); // Sort by creation date (newest first)
+      return res.status(200).send(blogs); // Send the blogs as response
+    } catch (error) {
+      return res.status(500).send({ error: "An error occurred while searching blogs." }); // Send error response
+    }
+  }
+
+async function getMyBlogs(req,res) {
+    try{
+        const userId = req.user._id;
+
+        const blogs = await Blog.find({
+            userId:userId
+        })
+        res.send(blogs)
+    } catch(error){
+        res.send(error)
+        console.log(error)
+    }
+}
+  
 module.exports ={
-    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments,getFollowingBlogs,getFamilyCFBlogs,getMilestonesWithCFCheck
+    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments,getFollowingBlogs,getFamilyCFBlogs,getMilestonesWithCFCheck,getBlogBySearch,getMyBlogs
 }
 
 

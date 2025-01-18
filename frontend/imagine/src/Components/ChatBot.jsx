@@ -99,19 +99,31 @@ const ChatBot = () => {
     }}
   />
 ) : (
+  
   messages.map((message, index) => (
     <Box
       key={index}
       sx={{
         display: "flex",
-        justifyContent:
-          message.sender === "user" ? "flex-end" : "flex-start",
+        justifyContent: "flex-start", // Align all messages to the left
+        flexDirection: "row", // Ensure avatar and message are in a row
       }}
     >
+      {message.sender === "user" && (
+        <Avatar
+          sx={{
+            bgcolor: "#444", // User avatar color
+            marginRight: "8px",
+            alignSelf: "flex-start",
+          }}
+        >
+          U
+        </Avatar>
+      )}
       {message.sender === "bot" && (
         <Avatar
           sx={{
-            bgcolor: "#c9B1ff",
+            bgcolor: "#c9B1ff", // Bot avatar color
             marginRight: "8px",
             alignSelf: "flex-start",
           }}
@@ -126,27 +138,16 @@ const ChatBot = () => {
           borderRadius: "16px",
           backgroundColor:
             message.sender === "user"
-              ? "#c9B1ff"
-              : Theme1.palette.black.main,
+              ? "#c9B1ff" // Background color for user messages
+              : Theme1.palette.black.main, // Background color for bot messages
           color:
             message.sender === "user"
-              ? Theme1.palette.black.main
-              : Theme1.palette.white.main,
+              ? Theme1.palette.black.main // Text color for user messages
+              : Theme1.palette.white.main, // Text color for bot messages
         }}
       >
         <Typography>{message.text}</Typography>
       </Box>
-      {message.sender === "user" && (
-        <Avatar
-          sx={{
-            bgcolor: "#444",
-            marginLeft: "8px",
-            alignSelf: "flex-end",
-          }}
-        >
-          U
-        </Avatar>
-      )}
     </Box>
   ))
 )}
