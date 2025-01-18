@@ -34,6 +34,12 @@ const userSchema=new Schema({
     profilePicUrl: {
         type: String 
     },
+    followers:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
+    }],
+    following:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
+    }],
 })
 
 module.exports=mongoose.model('User',userSchema)
