@@ -266,9 +266,23 @@ const fetchBlogComments = async (req, res) => {
       return res.status(500).send({ error: "An error occurred while searching blogs." }); // Send error response
     }
   }
+
+async function getMyBlogs(req,res) {
+    try{
+        const userId = req.user._id;
+
+        const blogs = await Blog.find({
+            userId:userId
+        })
+        res.send(blogs)
+    } catch(error){
+        res.send(error)
+        console.log(error)
+    }
+}
   
 module.exports ={
-    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments,getFollowingBlogs,getFamilyCFBlogs,getMilestonesWithCFCheck,getBlogBySearch
+    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments,getFollowingBlogs,getFamilyCFBlogs,getMilestonesWithCFCheck,getBlogBySearch,getMyBlogs
 }
 
 
