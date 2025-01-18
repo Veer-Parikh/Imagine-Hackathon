@@ -9,7 +9,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 const PostCard = () => {
   return (
-    <Card sx={{ maxWidth: 500, margin: "auto", borderRadius: 3, boxShadow: 3, bgcolor:"#dfebff" }}>
+    <Card sx={{maxWidth:'500px', margin: "auto", borderRadius: 3, boxShadow: 3, bgcolor:"#dfebff" }}>
       <CardContent>
         {/* Header */}
         <Box display="flex" alignItems="center" justifyContent="space-between">

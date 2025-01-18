@@ -13,7 +13,7 @@ function SideNavbar() {
   };
 
   return (
-    <div style={{ textAlign: "left" }}>
+    <div style={{ textAlign: "left", height:'100vh'}}>
       <ul style={{ listStyle: "none", marginTop: "40px", padding: 0 }}>
         {[
           { name: "posts", path: "/", label: "Posts" },
@@ -34,7 +34,7 @@ function SideNavbar() {
       selectedButton === item.name
         ? lightTheme.palette.white.main
         : lightTheme.palette.black.main,
-    width: "17%",
+    width: "95%",
     padding: "8px",
     paddingTop:'10px',
     paddingBottom: '10px',

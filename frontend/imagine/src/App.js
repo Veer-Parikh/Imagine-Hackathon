@@ -7,6 +7,8 @@ import lightTheme from "./Theme";
 import SideNavbar from "./Components/SideNavbar";
 import PostCard from "./Components/PostCard";
 import AddPostcard from "./Components/AddPostcard";
+import AccountPage from "./pages/Account";
+import Grid from "@mui/material/Grid2";
 
 
 function App() {
@@ -16,13 +18,19 @@ function App() {
     <div className="App">
       <ThemeProvider theme={lightTheme}>
         <Router> 
-         <SideNavbar/>
-          <Routes>
-            
-            
-            <Route path="/" element={<AddPostcard />} />
-
+          <div style={{display:'flex'}}>
+            <div style={{width:'300px'}}>
+              <SideNavbar />
+            </div>
+            <div>
+            <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/account" element={<AccountPage />} />
           </Routes>
+            </div>
+          </div>
+        
+         
         </Router>
       </ThemeProvider>
     </div>
