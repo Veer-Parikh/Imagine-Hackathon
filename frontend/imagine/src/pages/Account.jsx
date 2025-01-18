@@ -13,6 +13,8 @@ import img2 from "../images/i2.jpg";
 import img3 from "../images/i3.jpg";
 import img4 from "../images/i4.jpg";
 
+import AddPostcard from "../Components/AddPostcard";
+
 
 const ProfilePage = () => {
   const data = {
@@ -110,6 +112,10 @@ const ProfilePage = () => {
           <img src={img4} style={{width:'230px', height:'230px'}} />
         </Grid>
       </Grid>
+    </Box>
+
+    <Box>
+      <AddPostcard/>
     </Box>
     </>
   );

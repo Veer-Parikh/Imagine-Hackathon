@@ -21,6 +21,7 @@ const AddPostcard = () => {
   return (
     <Box
       sx={{
+        width:'450px',
         display: "flex",
         alignItems: "center",
         backgroundColor: "#f5f5f5",
