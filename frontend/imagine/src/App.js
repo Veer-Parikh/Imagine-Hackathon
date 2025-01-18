@@ -18,16 +18,21 @@ function App() {
     <div className="App">
       <ThemeProvider theme={lightTheme}>
         <Router> 
-          <div style={{display:'flex'}}>
-            <div style={{width:'300px'}}>
+          <div style={{display:'flex', width: '100%'}}>
+            <div style={{width:'20vw'}}>
               <SideNavbar />
             </div>
-            <div>
+            <div style={{width:'60vw', display: 'flex', flexDirection: 'column',}}>
             <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
           </Routes>
             </div>
+
+            <div style={{width:'20vw'}}>
+              <SideNavbar />
+            </div>
+
           </div>
         
          

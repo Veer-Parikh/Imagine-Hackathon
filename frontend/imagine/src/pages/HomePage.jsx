@@ -10,9 +10,7 @@ const HomePage = () => {
         <div style={{width:'600px'}}>
           <PostCard />
         </div>
-        <div style={{width:'600px'}}>
-          <PostCard />
-        </div>
+      
       </div>
 
     </>
