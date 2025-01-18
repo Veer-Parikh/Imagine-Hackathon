@@ -38,8 +38,15 @@ const userSchema=new Schema({
         type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
     }],
     following:[{
-        type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
-    }],
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+        family: {
+          type: Boolean,
+          default: false, 
+        },
+      },],
     blog:[{
         type: mongoose.Schema.Types.ObjectId,ref:'Blog',
     }]
