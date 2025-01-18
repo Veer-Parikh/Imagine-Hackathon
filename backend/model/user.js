@@ -13,7 +13,7 @@ const userSchema=new Schema({
     },
     email:{
         type:String,
-        required:true,
+        // required:true,
         unique:true,
     },
     phonenumber:{
@@ -27,9 +27,9 @@ const userSchema=new Schema({
     optExpiration:{
         type:Date,
     },
-    Age:{
+    age:{
         type:Number,
-        required:true,
+        // required:true,
     },
     profilePicUrl: {
         type: String 
