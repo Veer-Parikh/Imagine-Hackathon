@@ -205,10 +205,22 @@ const getFollowingdata = async (req, res) => {
     }
 };
 
+async function myProfile(req,res) {
+    try{
+        const userId = req.user._id;
+        const users = await User.findById(
+            userId
+        )
+        res.send(users)
+    } catch(error){
+
+    }
+}
+
 module.exports ={
     register,
     loginWithOTP,
     loginWithPassword,
     uploadprofilepic,
-    verifyOTP,follow,unfollow,getfollower,getFollowingdata
+    verifyOTP,follow,unfollow,getfollower,getFollowingdata,myProfile
 }
