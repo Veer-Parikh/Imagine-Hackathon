@@ -27,7 +27,7 @@ function App() {
             </Grid>
 
             {/* Chat */}
-            <Grid item xs={3}>
+            <Grid item>
               <Chat />
             </Grid>
           </Grid>

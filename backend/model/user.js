@@ -40,6 +40,9 @@ const userSchema=new Schema({
     following:[{
         type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
     }],
+    blog:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'Blog',
+    }]
 })
 
 module.exports=mongoose.model('User',userSchema)

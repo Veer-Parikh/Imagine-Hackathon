@@ -167,10 +167,25 @@ const getfollower=async(req,res)=>{
         res.status(500).send("Error while fetching followers")
     }
 }
+
+const getFollowingdata = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).populate('following', 'username email profilePicUrl blog followers foll');
+        
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.status(200).json(user.following);
+    } catch (error) {
+        console.error("Error while fetching following users:", error);
+        res.status(500).send('Error while fetching following users');
+    }
+};
+
 module.exports ={
     register,
     loginWithOTP,
     loginWithPassword,
     uploadprofilepic,
-    verifyOTP,follow,unfollow,getfollower
+    verifyOTP,follow,unfollow,getfollower,getFollowingdata
 }

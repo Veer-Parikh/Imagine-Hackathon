@@ -1,4 +1,4 @@
-const {register,loginWithOTP,loginWithPassword,uploadprofilepic, verifyOTP,follow,unfollow,getfollower}= require('../controller/user')
+const {register,loginWithOTP,loginWithPassword,uploadprofilepic, verifyOTP,follow,unfollow,getfollower,getFollowingdata}= require('../controller/user')
 const authenticatetoken=require('../middleware/authenticate')
 const upload=require('../middleware/multer')
 const express = require('express')
@@ -11,6 +11,7 @@ router.post('/verify-otp',verifyOTP)
 router.post('/uploadpic',authenticatetoken,upload.single('image'),uploadprofilepic)
 router.post('/follow/:id',authenticatetoken,follow)
 router.post('/unfollow/:id',authenticatetoken,unfollow)
-router.get('/getfollower',authenticatetoken,getfollower)
+//router.get('/getfollower',authenticatetoken,getfollower)
+router.get('/getfollower',authenticatetoken,getFollowingdata)
 
 module.exports = router 
