@@ -5,6 +5,8 @@ import { ThemeProvider } from "@mui/material";
 import HomePage from "./pages/HomePage";
 import lightTheme from "./Theme";
 import SideNavbar from "./Components/SideNavbar";
+import PostCard from "./Components/PostCard";
+import AddPostcard from "./Components/AddPostcard";
 
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
          <SideNavbar/>
           <Routes>
             
-            <Route path="/" element={<PostCard />} />
+            <Route path="/" element={<AddPostcard />} />
 
           </Routes>
         </Router>
