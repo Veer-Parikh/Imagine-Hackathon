@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Grid  from '@mui/material/Grid2';
+import SideNavbar from '../Components/SideNavbar';
+
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <>
+
+    </>
   )
 }
 
-export default HomePage
+export default HomePage;
