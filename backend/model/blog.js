@@ -32,6 +32,14 @@ const blogSchema = new mongoose.Schema({
     ref:'User',
     default:0
 }],
+isMilestone:{
+    type:Boolean,
+    default:false
+},
+forCF:{
+    type:Boolean,
+    default:false
+},
   Images:{
     type: String
   }

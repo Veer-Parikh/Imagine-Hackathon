@@ -127,22 +127,33 @@ const uploadprofilepic= async(req,res)=>{
     }
 }
 
-const follow=async(req,res)=>{
+const follow = async (req, res) => {
     try {
-        const followuser= await User.findById(req.params.id)
-        const followinguser= await User.findById(req.user._id)
-        if(!followuser || !followinguser){
-            return res.send("Wrong user id")
-        }
-        followuser.followers.push(req.user._id)
-        followinguser.following.push(req.params.id)
-        await followuser.save()
-        await followinguser.save()
-        res.send("Followed")
+      const { id } = req.params; 
+      const { family = false } = req.body; 
+      const followUser = await User.findById(id); 
+      const followingUser = await User.findById(req.user._id); 
+      if (!followUser || !followingUser) {
+        return res.status(404).send("User not found.");
+      }
+      const alreadyFollowing = followingUser.following.find(
+        (f) => f.userId?.toString() === id
+      );
+      if (alreadyFollowing) {
+        return res.status(400).send("You are already following this user.");
+      }
+      followUser.followers.push(req.user._id);
+      followingUser.following.push({ userId: id, family });
+      await followUser.save();
+      await followingUser.save();
+  
+      res.send("Followed successfully.");
     } catch (error) {
-        res.status(500).send(error)        
+      console.error("Error in follow:", error);
+      res.status(500).send("An error occurred while following the user.");
     }
-}
+  };
+  
 const unfollow=async(req,res)=>{
     try {
         const followuser= await User.findById(req.params.id)
@@ -170,7 +181,7 @@ const getfollower=async(req,res)=>{
 
 const getFollowingdata = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).populate('following', 'username email profilePicUrl blog followers foll');
+        const user = await User.findById(req.user._id).populate('following', 'username email profilePicUrl blog followers following');
         
         if (!user) {
             return res.status(404).send('User not found');

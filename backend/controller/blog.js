@@ -1,4 +1,5 @@
 const Blog=require('../model/blog')
+const Comment=require('../model/comment')
 const cloudinary=require('cloudinary')
 
 cloudinary.config({
@@ -9,7 +10,7 @@ cloudinary.config({
 
 async function createBlog(req, res) {
     try {
-        const { text, tags, title } = req.body;
+        const { text, tags, title ,isMilestone,forCF} = req.body;
         const userId = req.user._id;
         const tagsArray = tags ? tags.split(" ").map(tag => tag.trim()) : [];
         let imageUrl = '';
@@ -23,6 +24,7 @@ async function createBlog(req, res) {
             tags: tagsArray,
             userId,
             Images: imageUrl, 
+            isMilestone,forCF
         });
 
         const savedBlog = await newBlog.save();
@@ -82,8 +84,30 @@ const deleteBlog = async (req, res) => {
         res.status(500).send('An error occurred while deleting the blog');
     }
 };
+
+const fetchBlogComments = async (req, res) => {
+    try {
+      const blogId = req.params.id; 
+      const blog = await Blog.findById(blogId).populate({
+        path: 'comments', 
+        populate: {
+          path: 'userId', 
+          select: 'username email', 
+        },
+      });
+  
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+  
+      res.status(200).json(blog.comments); 
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      res.status(500).json({ error: 'An error occurred while fetching comments' });
+    }
+  };
 module.exports ={
-    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog
+    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments
 }
 
 
