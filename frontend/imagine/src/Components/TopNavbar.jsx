@@ -6,79 +6,44 @@ import { Link } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 // import Swal from 'sweetalert2';
 // import useMediaQuery from '@mui/material/useMediaQuery';
-// import TextField from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 // import SearchIcon from '@mui/icons-material/Search';
-// import { Button, Grid } from "@mui/material";
+import { Button, Grid2 } from "@mui/material";
 // import logo from '../pics/black white Shop logo.png';
 
-const Navbar = ({cartItems, onSearch}) => {
+const Navbar = () => {
 
-  const authContext = useContext(AuthContext);
-  const {loginSuccess , username, isAuthenticated} = authContext;
-  const {logout} = authContext;
-  const navigate = useNavigate();
-  const [dropdownVisible , setDropdownVisible] = useState(false);
-  
-  const handleDropdownVisibility = () => {
-    console.log('dropdown triggered');
-    setDropdownVisible(!dropdownVisible);
-  }
-
-  const handleLogout = () => {
-    logout();
-    Swal.fire({
-      icon: 'success',
-      title: 'See you soon!',
-      text: ' You have been successfully logged out!',
-    });
-    navigate('/');
-    setDropdownVisible(false);
-    console.log('logged out');
-  }
-
-  const handleKeyPress = (event) => {
-    if(event.key==='Enter')
-    {
-      handleSearch(event);
-    }
-  };
-
-  const handleSearch = (event) => {
-    onSearch(event.target.value);
-  };
-
+ 
   return (
    
-    <Grid container alignItems="center" justifyContent="space-between">
-    <Grid item>
+    <Grid2 container alignItems="center" justifyContent="space-between">
+    <Grid2 item>
       <Link to="/">
-    <img src={logo} style={{width:'170px', marginTop:'10px'}} />
+    {/* <img src={logo} style={{width:'170px', marginTop:'10px'}} /> */}
     </Link>
-    </Grid>
+    </Grid2>
   
-    <Grid item>
+    <Grid2 item>
         <TextField
           variant="outlined"
           placeholder="Search..."
           size="small"
-          value={searchQuery}
+          // value={searchQuery}
           style={{}}
-          onKeyDown={handleKeyPress}
+          // onKeyDown={handleKeyPress}
           InputProps={{
             style: { padding: '1px' ,width:'570px', border:'32px', borderColor:'#212A3E', borderRadius:'20px', backgroundColor:'#F1F6F9' }
           }}
         />
-    </Grid>
+    </Grid2>
     
-      <Grid item>
+      <Grid2 item>
         <Button>
-        <Link to={`/cart?items=${JSON.stringify(cartItems)}`} style={{color:"#ffffff" , textDecoration:"none"}}>
-        <BsCart2 className="navbar-cart" />
-        </Link>
+        
         </Button>
-        {
+        {/* {
           loginSuccess 
-          ? (<span><button className="wel-text" onClick={handleDropdownVisibility}>Welcome {username} <img src={dropdown} className="drop" /></button>
+          ? (<span><button className="wel-text" onClick={handleDropdownVisibility}>Welcome  <img src={dropdown} className="drop" /></button>
             {dropdownVisible && 
             (<div >
               <Button>Your Account</Button>
@@ -87,11 +52,11 @@ const Navbar = ({cartItems, onSearch}) => {
             }
             </span>)
           : (<Button><Link to={"/login"} style={{color:"#ffffff" , textDecoration:"none"}}>Login / SignUp</Link></Button>)
-        }
-      </Grid>
+        } */}
+      </Grid2>
       
 
-   </Grid>
+   </Grid2>
   );
 };
 

@@ -24,4 +24,10 @@ app.listen(port,()=>{
 const userRouter = require('./routes/user')
 app.use('/user',userRouter)
 
+const commentRouter=require('./routes/comment')  
+app.use('/comment',commentRouter)
+
+const blogRouter=require('./routes/blog')  
+app.use('/blog',blogRouter)
+
 module.exports=app

@@ -17,7 +17,8 @@ function App() {
          <SideNavbar/>
           <Routes>
             
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Navbar />} />
+
           </Routes>
         </Router>
       </ThemeProvider>
