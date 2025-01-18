@@ -2,7 +2,7 @@ const Comment=require('../model/comment')
 
 const addcomment= async(req,res)=>{
     try {
-        const {comment,answer,question}=req.body
+        const {comment}=req.body
         const user=req.user._id
         let newcomment
         if(answer){

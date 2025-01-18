@@ -37,7 +37,25 @@ async function createBlog(req, res) {
 
 const getblogs=async(req,res)=>{
     try {
-        const blog=await Blog.find()
+        const blog=await Blog.find({ forCF: false })
+        res.json(blog)
+    } catch (error) {
+        res.send("Error")
+    }
+}
+
+const getMilestoneCF=async(req,res)=>{
+    try {
+        const blog=await Blog.find({isMilestone:true})
+        res.json(blog)
+    } catch (error) {
+        res.send("Error")
+    }
+}
+
+const getMilestoneAll=async(req,res)=>{
+    try {
+        const blog=await Blog.find({ forCF:false,isMilestone:true})
         res.json(blog)
     } catch (error) {
         res.send("Error")
