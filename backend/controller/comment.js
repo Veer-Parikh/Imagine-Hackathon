@@ -2,20 +2,17 @@ const Comment=require('../model/comment')
 
 const addcomment= async(req,res)=>{
     try {
-        const {comment,answer,question}=req.body
+        const {comment,blog}=req.body
         const user=req.user._id
         let newcomment
-        if(answer){
-            newcomment=new Comment({comment,user,answer})
-        }
-        else if(question){
-            newcomment=new Comment({comment,user,question})
+        if(blog){
+            newcomment=new Comment({comment,user,blog})
         }
         else{
-            res.send("Please mention the answer or question to add comment")
+            res.send("Please mention the blogid")
         }
         const savecomment= await newcomment.save()
-        res.send({ message: 'Comment posted', savecomment: { _id: savecomment._id } })
+        res.send(savecomment)
     } catch (error) {
         res.status(500).send(error)
     }
