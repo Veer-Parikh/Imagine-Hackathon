@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 // import SearchIcon from '@mui/icons-material/Search';
 import { Button, Grid2 } from "@mui/material";
+// import Grid2 from "@mui/material";
 // import logo from '../pics/black white Shop logo.png';
 
 const Navbar = () => {
@@ -57,6 +58,7 @@ const Navbar = () => {
       
 
    </Grid2>
+
   );
 };
 

@@ -1,9 +1,11 @@
-import { BrowserRouter , Routes, Route } from "react-router-dom"; 
+import { BrowserRouter , Routes } from "react-router-dom"; 
+import { Route } from "react-router-dom";
 import './App.css';
 
 
 import HomePage from "./pages/HomePage";
 import Navbar from "./Components/TopNavbar";
+import PostCard from "./Components/PostCard";
 
 
 function App() {
@@ -15,9 +17,10 @@ function App() {
       
         
          <BrowserRouter> 
+
           <Routes>
             
-            <Route path="/" element={<Navbar />} />
+            <Route path="/" element={<PostCard />} />
 
           </Routes>
         </BrowserRouter>
