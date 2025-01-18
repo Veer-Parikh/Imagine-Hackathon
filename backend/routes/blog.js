@@ -1,4 +1,4 @@
-const { createBlog, getblogs, getUserBlogs, getBlogById, deleteBlog,fetchBlogComments, getFollowingBlogs,getFamilyCFBlogs, getMilestonesWithCFCheck } = require('../controller/blog');
+const { createBlog, getblogs, getUserBlogs, getBlogById, deleteBlog,fetchBlogComments, getFollowingBlogs,getFamilyCFBlogs, getMilestonesWithCFCheck,getBlogBySearch } = require('../controller/blog');
 const authenticatetoken = require('../middleware/authenticate');
 const express = require('express');
 const upload=require('../middleware/multer')
@@ -13,5 +13,6 @@ router.delete('/blog/:id', authenticatetoken, deleteBlog);
 router.get('/allBlogs',authenticatetoken,getFollowingBlogs)
 router.get('/cfBlogs',authenticatetoken,getFamilyCFBlogs)
 router.get('/mileBlogs',authenticatetoken,getMilestonesWithCFCheck)
+router.get("/search/:searchWord", getBlogBySearch);
 
 module.exports = router;
