@@ -19,6 +19,7 @@ function App() {
          <SideNavbar/>
           <Routes>
             
+            
             <Route path="/" element={<AddPostcard />} />
 
           </Routes>
