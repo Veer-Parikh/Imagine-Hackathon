@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Avatar, TextField, Button, Typography, CircularProgress } from "@mui/material";
-import Theme1 from "../Theme";
-import lightTheme from "../Theme";
+import Theme1 from "../Theme/Theme";
+import chaticon from "../images/chat.png"
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([]);
@@ -11,12 +11,10 @@ const ChatBot = () => {
   const handleSend = async () => {
     if (!inputText.trim()) return;
 
-    // Add user message to the chat
     const userMessage = { text: inputText, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInputText("");
 
-    // Fetch chatbot response
     setLoading(true);
     try {
       const response = await fetch(
@@ -40,7 +38,6 @@ const ChatBot = () => {
       const chatbotResponse =
         data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response.";
 
-      // Add chatbot message to the chat
       const botMessage = { text: chatbotResponse, sender: "bot" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
@@ -57,10 +54,10 @@ const ChatBot = () => {
   return (
     <Box
       sx={{
-        borderRadius:"8px",
+        borderRadius: "8px",
         minHeight: "90vh",
+        maxHeight: "95vh",
         display: "flex",
-        
         flexDirection: "column",
         justifyContent: "space-between",
         background: "white",
@@ -68,64 +65,92 @@ const ChatBot = () => {
         padding: "16px",
       }}
     >
+   
+      <Typography
+      sx={{
+        fontWeight:'bold',
+        fontSize:"24px",
+        
+      }}>
+        Chat
+      </Typography>
       {/* Chat Display */}
       <Box
         sx={{
           flex: 1,
-          borderRadius:"50px",
+          borderRadius: "50px",
           overflowY: "auto",
           padding: "16px",
           display: "flex",
           flexDirection: "column",
+          alignItems: messages.length === 0 ? "center" : "flex-start",
+          justifyContent: messages.length === 0 ? "center" : "flex-start",
           gap: "12px",
         }}
       >
-        {messages.map((message, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              justifyContent:
-                message.sender === "user" ? "flex-end" : "flex-start",
-            }}
-          >
-            {message.sender === "bot" && (
-              <Avatar
-                sx={{
-                  bgcolor: "#c9B1ff",
-                  marginRight: "8px",
-                  alignSelf: "flex-start",
-                }}
-              >
-                AI
-              </Avatar>
-            )}
-            <Box
-              sx={{
-                maxWidth: "70%",
-                padding: "12px",
-                borderRadius: "16px",
-                backgroundColor:
-                  message.sender === "user" ? "#c9B1ff" : lightTheme.palette.black.main,
-                color: 
-                message.sender === "user" ? lightTheme.palette.black.main: lightTheme.palette.white.main,
-              }}
-            >
-              <Typography>{message.text}</Typography>
-            </Box>
-            {message.sender === "user" && (
-              <Avatar
-                sx={{
-                  bgcolor: "#444",
-                  marginLeft: "8px",
-                  alignSelf: "flex-end",
-                }}
-              >
-                U
-              </Avatar>
-            )}
-          </Box>
-        ))}
+        {messages.length === 0 ? (
+  <Box
+    component="img"
+    src={chaticon} // Replace with your image URL
+    alt="No messages"
+    sx={{
+      maxWidth: "50%",
+      borderRadius: "8px",
+    }}
+  />
+) : (
+  messages.map((message, index) => (
+    <Box
+      key={index}
+      sx={{
+        display: "flex",
+        justifyContent:
+          message.sender === "user" ? "flex-end" : "flex-start",
+      }}
+    >
+      {message.sender === "bot" && (
+        <Avatar
+          sx={{
+            bgcolor: "#c9B1ff",
+            marginRight: "8px",
+            alignSelf: "flex-start",
+          }}
+        >
+          AI
+        </Avatar>
+      )}
+      <Box
+        sx={{
+          maxWidth: "70%",
+          padding: "12px",
+          borderRadius: "16px",
+          backgroundColor:
+            message.sender === "user"
+              ? "#c9B1ff"
+              : Theme1.palette.black.main,
+          color:
+            message.sender === "user"
+              ? Theme1.palette.black.main
+              : Theme1.palette.white.main,
+        }}
+      >
+        <Typography>{message.text}</Typography>
+      </Box>
+      {message.sender === "user" && (
+        <Avatar
+          sx={{
+            bgcolor: "#444",
+            marginLeft: "8px",
+            alignSelf: "flex-end",
+          }}
+        >
+          U
+        </Avatar>
+      )}
+    </Box>
+  ))
+)}
+
         {loading && (
           <Box
             sx={{
@@ -134,7 +159,7 @@ const ChatBot = () => {
               marginTop: 2,
             }}
           >
-            <CircularProgress sx={{ color: "#6c63ff" }} />
+            <CircularProgress sx={{ color: "#c9B1ff" }} />
           </Box>
         )}
       </Box>
@@ -150,32 +175,34 @@ const ChatBot = () => {
         }}
       >
         <TextField
-  fullWidth
-  variant="outlined"
-  placeholder="Type a message..."
-  value={inputText}
-  onChange={(e) => setInputText(e.target.value)}
-  sx={{
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#c9B1ff", // Default border color
-      },
-      "&:hover fieldset": {
-        borderColor: "#c9B1ff", // Border color on hover
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#c9B1ff", // Border color when focused
-      },
-    },
-    input: { color: lightTheme.palette.black.main },
-  }}
-/>
+          fullWidth
+          variant="outlined"
+          placeholder="Type a message..."
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#c9B1ff", // Default border color
+              },
+              "&:hover fieldset": {
+                borderColor: "#c9B1ff", // Border color on hover
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#c9B1ff", // Border color when focused
+              },
+            },
+            input: { color: Theme1.palette.black.main },
+          }}
+        />
         <Button
           variant="contained"
-          
           onClick={handleSend}
           disabled={loading}
-          sx={{ bgcolor: lightTheme.palette.black.main, color: lightTheme.palette.white.main }}
+          sx={{
+            bgcolor: Theme1.palette.black.main,
+            color: Theme1.palette.white.main,
+          }}
         >
           Send
         </Button>

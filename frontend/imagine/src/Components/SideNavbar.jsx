@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { Button, Typography, Switch, FormControlLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import lightTheme from "../Theme";
-
+import { useTheme } from "../Theme/ThemeProvider";
+import Theme1 from "../Theme/Theme";
 
 function SideNavbar() {
   const [selectedButton, setSelectedButton] = useState("posts");
-  const [isDarkTheme, setIsDarkTheme] = useState(false); // Theme state
+  const { isDarkTheme, toggleTheme } = useTheme(false); // Use theme from context
   const navigate = useNavigate();
 
   const handleButtonClick = (buttonname, path) => {
     setSelectedButton(buttonname);
     navigate(path);
-  };
-
-  const handleThemeToggle = () => {
-    setIsDarkTheme(!isDarkTheme);
   };
 
   return (
@@ -43,12 +39,12 @@ function SideNavbar() {
               sx={{
                 backgroundColor:
                   selectedButton === item.name
-                    ? lightTheme.palette.black.main
-                    : lightTheme.palette.white.main,
+                    ? Theme1.palette.black.main
+                    : Theme1.palette.white.main,
                 color:
                   selectedButton === item.name
-                    ? lightTheme.palette.white.main
-                    : lightTheme.palette.black.main,
+                    ? Theme1.palette.white.main
+                    : Theme1.palette.black.main,
                 width: "95%",
                 padding: "8px",
                 marginLeft: "1px",
@@ -58,8 +54,8 @@ function SideNavbar() {
                 "&:hover": {
                   backgroundColor:
                     selectedButton === item.name
-                      ? lightTheme.palette.black.main
-                      : lightTheme.palette.grey[200],
+                      ? Theme1.palette.black.main
+                      : Theme1.palette.grey[200],
                 },
               }}
             >
@@ -82,8 +78,8 @@ function SideNavbar() {
         <FormControlLabel
           control={
             <Switch
-              checked={isDarkTheme}
-              onChange={handleThemeToggle}
+              checked={isDarkTheme} // Use theme state from context
+              onChange={toggleTheme} // Toggle theme using context function
               color="primary"
             />
           }
@@ -93,8 +89,8 @@ function SideNavbar() {
                 fontSize: "110%",
                 fontWeight: "bold",
                 color: isDarkTheme
-                  ? lightTheme.palette.white.main
-                  : lightTheme.palette.black.main,
+                  ? Theme1.palette.white.main
+                  : Theme1.palette.black.main,
               }}
             >
               {isDarkTheme ? "Light" : "Dark"}
