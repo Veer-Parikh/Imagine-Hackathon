@@ -1,6 +1,7 @@
 const Blog=require('../model/blog')
 const Comment=require('../model/comment')
-const cloudinary=require('cloudinary')
+const cloudinary=require('cloudinary');
+const User = require('../model/user');
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -62,10 +63,118 @@ const getMilestoneAll=async(req,res)=>{
     }
 }
 
+const getFollowingBlogs = async (req, res) => {
+    try {
+        const userId = req.user._id; // Current user's ID
+
+        // Fetch the current user's following list
+        const user = await User.findById(userId).select('following');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Prepare the filter conditions for blogs
+        const followingUsers = user.following;
+
+        // Fetch blogs based on the conditions
+        const blogPromises = followingUsers.map(following => {
+            if (following.family) {
+                // Fetch all blogs of this user
+                return Blog.find({ userId: following.userId });
+            } else {
+                // Fetch blogs where forCF is false
+                return Blog.find({ userId: following.userId, forCF: false });
+            }
+        });
+
+        // Wait for all blog queries to resolve
+        const blogsArray = await Promise.all(blogPromises);
+
+        // Flatten the array of blog arrays
+        const blogs = blogsArray.flat();
+
+        res.status(200).json(blogs);
+    } catch (error) {
+        console.error('Error fetching blogs from followed users:', error);
+        res.status(500).json({ error: 'An error occurred while fetching blogs' });
+    }
+};
+
+const getFamilyCFBlogs = async (req, res) => {
+    try {
+        const userId = req.user._id; // Current user's ID
+
+        // Fetch the current user's following list
+        const user = await User.findById(userId).select('following');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Filter the list of following users to get only family members
+        const familyMembers = user.following
+            .filter(following => following.family)
+            .map(following => following.userId);
+
+        if (familyMembers.length === 0) {
+            return res.status(200).json([]); // No family members, return empty array
+        }
+
+        // Fetch blogs from family members marked as forCF
+        const cfBlogs = await Blog.find({
+            userId: { $in: familyMembers },
+            forCF: true
+        });
+
+        res.status(200).json(cfBlogs);
+    } catch (error) {
+        console.error('Error fetching CF blogs from family members:', error);
+        res.status(500).json({ error: 'An error occurred while fetching CF blogs' });
+    }
+};
+
+const getMilestonesWithCFCheck = async (req, res) => {
+    try {
+        const userId = req.user._id; // Current user's ID
+
+        // Fetch the current user's following list
+        const user = await User.findById(userId).select('following');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Separate the following list into family and non-family
+        const following = user.following;
+        const familyMembers = following
+            .filter(following => following.family)
+            .map(following => following.userId);
+
+        const nonFamilyMembers = following
+            .filter(following => !following.family)
+            .map(following => following.userId);
+
+        // Query to fetch milestones:
+        // - For family members: all milestones including CF=true
+        // - For non-family members: milestones only where CF=false
+        const milestones = await Blog.find({
+            $or: [
+                // Family members: All milestones
+                { userId: { $in: familyMembers }, isMilestone: true },
+                // Non-family members: Only milestones with CF=false
+                { userId: { $in: nonFamilyMembers }, isMilestone: true, forCF: false }
+            ]
+        });
+
+        res.status(200).json(milestones);
+    } catch (error) {
+        console.error('Error fetching milestones:', error);
+        res.status(500).json({ error: 'An error occurred while fetching milestones' });
+    }
+};
+
 const getBlogById = async (req, res) => {
     try {
         const blogId = req.params.id;
-        const blog = await Blog.findById(blogId);
+        const blog = await Blog.findById(blogId).populate('comments');
 
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' });
@@ -87,6 +196,7 @@ const getUserBlogs = async (req, res) => {
         res.status(500).send("An error occurred while fetching user blogs");
     }
 };
+
 
 const deleteBlog = async (req, res) => {
     try {
@@ -125,7 +235,7 @@ const fetchBlogComments = async (req, res) => {
     }
   };
 module.exports ={
-    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments
+    createBlog,getblogs,getUserBlogs,getBlogById,deleteBlog,fetchBlogComments,getFollowingBlogs,getFamilyCFBlogs,getMilestonesWithCFCheck
 }
 
 

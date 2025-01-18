@@ -154,22 +154,34 @@ const follow = async (req, res) => {
     }
   };
   
-const unfollow=async(req,res)=>{
+  const unfollow = async (req, res) => {
     try {
-        const followuser= await User.findById(req.params.id)
-        const followinguser= await User.findById(req.user._id)
-        if(!followuser || !followinguser){
-            return res.send("Wrong user id")
+        const followuser = await User.findById(req.params.id);
+        const followinguser = await User.findById(req.user._id);
+
+        if (!followuser || !followinguser) {
+            return res.status(400).send("Invalid user ID.");
         }
-        followuser.followers.pull(req.user._id)
-        followinguser.following.pull(req.params.id)
-        await followuser.save()
-        await followinguser.save()
-        res.send("Unfollowed")
+
+        // Remove the current user from the followuser's followers list
+        followuser.followers = followuser.followers.filter(
+            (follower) => follower.userId.toString() !== req.user._id.toString()
+        );
+
+        // Remove the followuser from the following list of the current user
+        followinguser.following = followinguser.following.filter(
+            (following) => following.userId.toString() !== req.params.id.toString()
+        );
+
+        await followuser.save();
+        await followinguser.save();
+
+        res.send("Unfollowed");
     } catch (error) {
-        res.status(500).send(error)        
+        res.status(500).send(error);
     }
-}
+};
+
 const getfollower=async(req,res)=>{
     try {
         const user =await User.findById(req.user._id)
