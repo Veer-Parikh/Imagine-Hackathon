@@ -13,7 +13,7 @@ const userSchema=new Schema({
     },
     email:{
         type:String,
-        required:true,
+        // required:true,
         unique:true,
     },
     phonenumber:{
@@ -27,13 +27,22 @@ const userSchema=new Schema({
     optExpiration:{
         type:Date,
     },
-    Age:{
+    age:{
         type:Number,
-        required:true,
+        // required:true,
     },
     profilePicUrl: {
         type: String 
     },
+    followers:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
+    }],
+    following:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'User',default:0
+    }],
+    blog:[{
+        type: mongoose.Schema.Types.ObjectId,ref:'Blog',
+    }]
 })
 
 module.exports=mongoose.model('User',userSchema)
