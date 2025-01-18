@@ -9,6 +9,7 @@ import PostCard from "./Components/PostCard";
 import AddPostcard from "./Components/AddPostcard";
 import AccountPage from "./pages/Account";
 import Grid from "@mui/material/Grid2";
+import ChatBot from "./Components/ChatBot";
 
 
 function App() {
@@ -19,20 +20,18 @@ function App() {
       <ThemeProvider theme={lightTheme}>
         <Router> 
           <div style={{display:'flex', width: '100%'}}>
-            <div style={{width:'20vw'}}>
+            <div style={{width:'18vw'}}>
               <SideNavbar />
             </div>
-            <div style={{width:'60vw', display: 'flex', flexDirection: 'column',}}>
+            <div style={{width:'63vw', display: 'flex', flexDirection: 'column',}}>
             <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/account" element={<AccountPage />} />
-          </Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/account" element={<AccountPage />} />
+            </Routes>
             </div>
-
-            <div style={{width:'20vw'}}>
-              <SideNavbar />
+            <div style={{width:'18vw'}}>
+              <ChatBot />
             </div>
-
           </div>
         
          

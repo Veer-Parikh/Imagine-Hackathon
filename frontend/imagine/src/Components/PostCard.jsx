@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
+import img1 from "../images/img1.jpg";
 
 // Dummy Data
 const postData = [
@@ -61,8 +62,8 @@ const postData = [
 
 const PostCard = ({ name, message, mentioned, views, images }) => {
   return (
-    <Card sx={{width: "150%", margin: "auto", borderRadius: 3, boxShadow: 3, bgcolor: "#dfebff" }}>
-      <CardContent>
+    <Box sx={{width: "100%", margin: "auto"}}>
+      <CardContent style={{paddingLeft:'25px', paddingTop:'25px'}}>
         {/* Header */}
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box display="flex" alignItems="center">
@@ -71,65 +72,43 @@ const PostCard = ({ name, message, mentioned, views, images }) => {
               {name}
             </Typography>
           </Box>
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+         
         </Box>
-        <Typography variant="body2" color="text.secondary" mt={1}>
-          {message}{" "}
-          {mentioned.map((person, index) => (
-            <Typography key={index} component="span" color="primary" fontWeight="bold">
-              {person}
-              {index < mentioned.length - 1 && ", "}
-            </Typography>
-          ))}
-        </Typography>
-
+     
         {/* Image Gallery */}
         <Grid container spacing={1} mt={1}>
-          {images.map((image, index) => (
-            <Grid item xs={4} key={index}>
+         
+            <Grid item xs={4} >
               <CardMedia
                 component="img"
-                height="80"
-                image={image}
-                alt={`Image ${index + 1}`}
-                sx={{ borderRadius: 1 }}
+                image={img1}
+                sx={{ borderRadius: 1, width:'120%', height:"450px", width:"400px", paddingLeft:'250px'}}
               />
             </Grid>
-          ))}
+       
         </Grid>
 
         {/* Actions */}
         <Box display="flex" alignItems="center" justifyContent="space-between" mt={2}>
           <Box display="flex" alignItems="center">
             <IconButton>
-              <RemoveRedEyeIcon />
+            <FavoriteIcon />
             </IconButton>
             <Typography variant="body2">{views}</Typography>
-            <IconButton>
-              <FavoriteIcon />
-            </IconButton>
             <IconButton>
               <CommentIcon />
             </IconButton>
           </Box>
-          <Button
-            variant="contained"
-            startIcon={<EmojiEmotionsIcon />}
-            sx={{
-              backgroundColor: "#FFD700",
-              color: "black",
-              textTransform: "none",
-              borderRadius: 3,
-              fontWeight: "bold",
-            }}
-          >
-            Woow!!!
-          </Button>
-        </Box>
+         
+          </Box>
+          <Typography variant="body2" color="text.secondary" textAlign="left" mt={1}>
+          {message}{" "}
+        </Typography>
+
+
+    
       </CardContent>
-    </Card>
+    </Box>
   );
 };
 

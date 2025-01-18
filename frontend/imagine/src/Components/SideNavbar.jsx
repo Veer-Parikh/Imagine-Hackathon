@@ -13,7 +13,7 @@ function SideNavbar() {
   };
 
   return (
-    <div style={{ textAlign: "left", height:'100vh'}}>
+    <div style={{ textAlign: "left", height:'100vh', marginLeft:'20px'}}>
       <ul style={{ listStyle: "none", marginTop: "40px", padding: 0 }}>
         {[
           { name: "posts", path: "/", label: "Posts" },
