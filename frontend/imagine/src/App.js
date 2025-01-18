@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; 
 import './App.css';
-import lightTheme from "./Theme";
+
+import HomePage from "./pages/HomePage";
 
 
 function App() {
@@ -9,21 +10,15 @@ function App() {
   return (
     <div className="App">
       
-       <ThemeProvider theme={lightTheme}>
-        <UsernameProvider>
-       <EmailProvider>
+      
+        
          <Router> 
           <Routes>
-            <Route path="/scoperecommendations" element={<ScopeReco />} /> 
-            <Route path="/materialrecommendations" element={<Recommendations/>} /> 
-            <Route path="/teacherDashboard" element={<TeacherDashboard />} />
-            <Route path="/studentDashboard" element={<StudentDashboard />} />
-            <Route path="/" element={<Home />} />
+            
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </Router>
-        </EmailProvider>
-        </UsernameProvider>
-        </ThemeProvider>
+       
         
     </div>
   );
