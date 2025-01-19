@@ -193,18 +193,22 @@ const getfollower=async(req,res)=>{
 
 const getFollowingdata = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id).populate('following', 'username email profilePicUrl blog followers following');
-        
+        const user = await User.findById(req.user._id)
+            .populate({
+                path: 'following.userId', // Populate the userId field in following
+                select: 'username email profilePicUrl blogs followers following', // Select necessary fields
+            });
+
         if (!user) {
             return res.status(404).send('User not found');
         }
-        res.status(200).json(user.following);
+
+        res.json(user.following); // Send the populated following data
     } catch (error) {
         console.error("Error while fetching following users:", error);
         res.status(500).send('Error while fetching following users');
     }
 };
-
 async function myProfile(req,res) {
     try{
         const userId = req.user._id;
