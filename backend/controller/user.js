@@ -93,7 +93,7 @@ const verifyOTP = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (user.otp !== otp || new Date() > user.otpExpiration) {
+        if (user.otp !== otp || new Date() > user.optExpiration) {
             return res.status(400).json({ message: 'Invalid or expired OTP' });
         }
 
@@ -217,10 +217,63 @@ async function myProfile(req,res) {
     }
 }
 
+const searchUser = async (req, res) => {
+    const { query } = req.params; // Expecting `query` in the request body
+  
+    if (!query) {
+      return res.status(400).json({ message: "Query is required" });
+    }
+  
+    try {
+      // Search for a user where username or phone matches the query
+      const user = await User.findOne({
+        $or: [
+          { username: query },
+          { phoneNumber: query },
+        ],
+      });
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      return res.status(200).json(user);
+    } catch (error) {
+      console.error("Error searching for user:", error);
+      return res.status(500).json({ message: "An error occurred" });
+    }
+  };
+  
+const checkFollow = async (req, res) => {
+    try {
+      const currentUserId = req.user.userId; // Get the current user's ID from the auth middleware
+      const followedId = req.params.followedId; // Get the ID of the user to check from the request parameters
+  
+      // Find the current user and check if they are following the specified user
+      const user = await User.findById(currentUserId);
+  
+      if (!user) {
+        return res.status(404).json({ message: "Current user not found" });
+      }
+  
+      // Check if the followedId exists in the user's following list
+      const isFollowing = user.following.some(
+        (follow) => follow.userId.toString() === followedId
+      );
+  
+      return res.status(200).json({ isFollowing });
+    } catch (error) {
+      console.error("Error checking follow status:", error);
+      return res
+        .status(500)
+        .json({ message: "Server error while checking follow status" });
+    }
+};
+
 module.exports ={
     register,
     loginWithOTP,
     loginWithPassword,
     uploadprofilepic,
-    verifyOTP,follow,unfollow,getfollower,getFollowingdata,myProfile
+    verifyOTP,follow,unfollow,getfollower,getFollowingdata,myProfile,searchUser,checkFollow
 }
